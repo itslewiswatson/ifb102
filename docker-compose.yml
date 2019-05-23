@@ -1,0 +1,26 @@
+version: "1.0"
+
+services:
+  server2:
+    container_name: server2
+    build:
+      context: .
+      dockerfile: ./server2/Dockerfile
+    depends_on:
+      - db
+    restart: on-failure
+    ports:
+      - 9000:3001
+    volumes:
+      - "./server2/nginx.conf /etc/nginx/sites-available/default.conf"
+
+  db:
+    image: mysql
+    container_name: db
+    enviornment:
+      - MYSQL_ROOT_PASSWORD=local
+    restart: always
+    ports:
+      - "8888:3306"
+    volumes:
+      # what is this
