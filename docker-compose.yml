@@ -23,5 +23,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=local
       - MYSQL_DATABASE=ifb102
-    ports:
-      - "8787:3306"
+      - MYSQL_ALLOW_EMPTY_PASSWORD=no
+    expose:
+      - "3306"

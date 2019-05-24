@@ -4,21 +4,40 @@ require("./api-keys.php");
 
 $apiKey = new ApiKey();
 
-//$baseRoute = $_SERVER["REQUEST_URI"];
-$route = "/new-api-key";
-$_GET["apiKey"] = "89544793d5a22d5e";
+// Request
+$action = $_GET["action"] ?: "index";
 
+// Response
 $response = [];
 
-if ($route === "/new-api-key") {
-	$genKey = $apiKey->generate();
-	$response["data"] = ["apiKey" => $genKey];
+// Route Map
+$routesMap = [
+	// Function args must be passed by reference (&$variable notation)
+	"index" => static function() use ($apiKey, &$response) {
+		$response["data"] = [
+			"validActions" => [
+				"doesKeyExist",
+				"generateApiKey"
+			]
+		];
+	},
+	"generateApiKey" => static function() use ($apiKey, &$response) {
+		$genKey = $apiKey->generate();
+		$response["data"] = ["apiKey" => $genKey];
+	},
+	"doesKeyExist" => static function() use ($apiKey, &$response) {
+		$providedKey = $_GET["apiKey"];
+		$exists = $apiKey->doesKeyExist($providedKey);
+		$response["data"] = ["doesKeyExist" => $exists];
+	}
+];
 
+// Route Logic
+if ($action && is_callable($routesMap[$action])) {
+	call_user_func($routesMap[$action]);
 }
-elseif ($route === "/key/exists") {
-	$providedKey = $_GET["apiKey"];
-	$exists = $apiKey->doesKeyExist($providedKey);
-	$response["data"] = ["doesKeyExist" => $exists];
+else {
+	call_user_func($routesMap["index"]);
 }
 
 echo json_encode($response);

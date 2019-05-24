@@ -7,8 +7,9 @@ class Database
 
 	final public function __construct()
 	{
-		$connection = new mysqli("localhost", "root", "local", "ifb102", 3306);
-		if (!$connection) {
+		// `mysql` is the container name, so we use that to connect
+		$connection = new mysqli("mysql", "root", "local", "ifb102", 3306);
+		if (!$connection || $connection->errno) {
 			die("Cannot connect to database");
 		}
 		$this->connection = $connection;

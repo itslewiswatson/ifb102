@@ -14,3 +14,6 @@ CREATE TABLE IF NOT EXISTS `__api__keys` (
 	`generated_at` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- more tables idk?
+
+-- Some nice test data
+INSERT INTO `__api__keys` (`api_key`, `generated_at`) VALUES ('56d084ad7010646c', UNIX_TIMESTAMP());
