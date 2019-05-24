@@ -1,7 +1,7 @@
 <?php
 
+// API key library
 require("./api-keys.php");
-
 $apiKey = new ApiKey();
 
 // Request
@@ -11,8 +11,8 @@ $action = $_GET["action"] ?: "index";
 $response = [];
 
 // Route Map
-$routesMap = [
 	// Function args must be passed by reference (&$variable notation)
+$routesMap = [
 	"index" => static function() use ($apiKey, &$response) {
 		$response["data"] = [
 			"validActions" => [
@@ -40,4 +40,5 @@ else {
 	call_user_func($routesMap["index"]);
 }
 
+// Return response
 echo json_encode($response);
