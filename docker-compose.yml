@@ -1,4 +1,4 @@
-version: "1.0"
+version: "3.3"
 
 services:
   server2:
@@ -7,20 +7,21 @@ services:
       context: .
       dockerfile: ./server2/Dockerfile
     depends_on:
-      - db
+      - mysql
     restart: on-failure
     ports:
-      - 9000:3001
+      - "9453:3001"
     volumes:
-      - "./server2/nginx.conf /etc/nginx/sites-available/default.conf"
+      - "./server2/nginx.conf:/etc/nginx/sites-available/default.conf"
 
-  db:
+  mysql:
     image: mysql
-    container_name: db
-    enviornment:
-      - MYSQL_ROOT_PASSWORD=local
+    container_name: mysql
     restart: always
-    ports:
-      - "8888:3306"
     volumes:
-      # what is this
+      - "./mysql/schema:/docker-entrypoint-initdb.d"
+    environment:
+      - MYSQL_ROOT_PASSWORD=local
+      - MYSQL_DATABASE=ifb102
+    ports:
+      - "8787:3306"

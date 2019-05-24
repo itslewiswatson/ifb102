@@ -7,7 +7,7 @@ class Database
 
 	final public function __construct()
 	{
-		$connection = new mysqli("localhost", "root", "", "ifb102", 3306);
+		$connection = new mysqli("localhost", "root", "local", "ifb102", 3306);
 		if (!$connection) {
 			die("Cannot connect to database");
 		}

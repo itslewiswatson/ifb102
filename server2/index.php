@@ -5,7 +5,7 @@ require("./api-keys.php");
 $apiKey = new ApiKey();
 
 //$baseRoute = $_SERVER["REQUEST_URI"];
-$route = "/key/exists";
+$route = "/new-api-key";
 $_GET["apiKey"] = "89544793d5a22d5e";
 
 $response = [];

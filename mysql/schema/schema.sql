@@ -1,10 +1,13 @@
---//-- Behaviour properties
+-- Behaviour properties
 SET time_zone = "+10:00";
 
---//-- Create database
+-- Create database
 CREATE DATABASE IF NOT EXISTS `ifb102`;
 
---//-- Create tables
+-- Use created database
+USE `ifb102`;
+
+-- Create tables
 -- API key store
 CREATE TABLE IF NOT EXISTS `__api__keys` (
 	`api_key` varchar(16) NOT NULL,
