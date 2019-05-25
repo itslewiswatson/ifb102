@@ -7,7 +7,7 @@ This is the repository for the IFB102 mini-project.
 Ensure you are running on Linux, with `docker` and `docker-compose` installed.
 
 ## Setup
-`$ ./launch.sh`
+`./launch.sh`
 
 This will automatically shut down any running containers gracefully, before rebuilding them and launching the application in the foreground.
 
