@@ -1,6 +1,18 @@
 version: "3.3"
 
 services:
+  proxy:
+    container_name: proxy
+    build:
+      context: .
+      dockerfile: ./proxy/Dockerfile
+    restart: on-failure
+    ports:
+      - "1337:80"
+    volumes:
+      - "./proxy/sites-available.conf:/etc/nginx/sites-available/default.conf"
+      - "./proxy/nginx.conf:/etc/nginx/nginx.conf"
+
   server2:
     container_name: server2
     build:
@@ -8,9 +20,12 @@ services:
       dockerfile: ./server2/Dockerfile
     depends_on:
       - mysql
+      #- proxy
     restart: on-failure
     ports:
       - "9453:3001"
+    expose:
+      - "3001"
     volumes:
       - "./server2/nginx.conf:/etc/nginx/sites-available/default.conf"
 
