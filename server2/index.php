@@ -29,6 +29,10 @@ $routesMap = [
 		$providedKey = $_GET["apiKey"];
 		$exists = $apiKey->doesKeyExist($providedKey);
 		$response["data"] = ["doesKeyExist" => $exists];
+	},
+	"newApiKey" => static function() use ($apiKey, &$response) {
+		$newKey = $apiKey->persistNewApiKey();
+		$response["data"] = ["apiKey" => $newKey];
 	}
 ];
 

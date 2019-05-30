@@ -1,6 +1,10 @@
 -- Behaviour properties
 SET time_zone = "+10:00";
 
+-- Fix stupid backwards mysql bullshit
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'local';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'local';
+
 -- Create database
 CREATE DATABASE IF NOT EXISTS `ifb102`;
 

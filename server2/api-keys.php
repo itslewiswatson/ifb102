@@ -16,7 +16,6 @@ class ApiKey
 	 */
 	final public function __construct()
 	{
-		
 	}
 
 	/**
@@ -44,5 +43,28 @@ class ApiKey
 		$queryString = "SELECT * FROM `" . self::tableName . "` WHERE `api_key` = '" . $apiKey . "'";
 		$query = $connection->query($queryString);
 		return ($query && $query->num_rows === 1) ? true : false;
+	}
+
+	public function persistNewApiKey(): string
+	{
+		if (!is_a($this->db, Database::class)) {
+			$this->db = new Database();
+		}
+		/** @var mysqli $connection */
+		$connection = $this->db->getConnection();
+
+		/** @var string */
+		//$apiKey = null;
+		//do {
+			$apiKey = $this->generate();
+		//} while (!$this->doesKeyExist($apiKey));
+
+		$stmnt = $connection->prepare(
+			"INSERT INTO `" . self::tableName . "` (`api_key`, `generated_at`) VALUES (?, UNIX_TIMESTAMP())"
+		);
+		$stmnt->bind_param("s", $apiKey);
+		$stmnt->execute();
+
+		return $apiKey;
 	}
 }
